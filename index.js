@@ -10,7 +10,18 @@ const PORT = process.env.PORT;
 const corsOptions = {
     credentials: true,
     optionSuccessStatus: 200,
-    origin: process.env.FRONTEND_HOST,
+    origin: async(origin, callback) => {
+        try {
+         const origins = await db.origins.findAll({ attributes: ['host'], raw: true });
+         const originsArray = origins.map(el => el.host);
+
+         originsArray.push(origin);
+         
+         callback(null, originsArray);
+        } catch (error) {
+            callback(error, null);
+        }
+    },
 };
 
 const app = express();
@@ -24,6 +35,7 @@ app.options('*', cors());
 
 require('./routes/user.routes')(app);
 require('./routes/auth.routes')(app);
+require('./routes/OAuth2.routes')(app);
 
 db.sequelize.sync()
     .then(() => {
