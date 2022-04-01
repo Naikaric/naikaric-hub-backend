@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "naikaric-hub-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server of Naikaric hub",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
