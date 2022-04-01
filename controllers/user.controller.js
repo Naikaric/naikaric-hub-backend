@@ -32,7 +32,7 @@ exports.get = async(req, res) => {
     try {
         const { id } = req.params;
     
-        const user = await User.findByPk(id);
+        const user = await User.findByPk(id, { attributes: { exclude: ['createdAt', 'id', 'password', 'updatedAt'] } });
     
         if(user) {
             res.json(user);

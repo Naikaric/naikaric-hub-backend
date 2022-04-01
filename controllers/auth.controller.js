@@ -10,26 +10,28 @@ exports.login = async(req, res) => {
     try {
         const { phone, password, fingerprint } = req.body.data;
 
-        const user = await User.findOne({ where: { phone } });
-        if(user) {
-            const isValidPassword = await bcrypt.compare(password, user.password);
+        const computedUser = await User.findOne({ where: { phone }});
+        const user = await User.findOne({ where: { phone }, attributes: { exclude: ['createdAt', 'id', 'password', 'updatedAt'] } });
+
+        if(computedUser) {
+            const isValidPassword = await bcrypt.compare(password, computedUser.password);
 
             if(isValidPassword) {
                 const expiresIn = Number(process.env.EXPIRATION_TIME_REFRESH_TOKEN);
-                const refreshSessions = await user.getRefreshsessions();
+                const refreshSessions = await computedUser.getRefreshsessions();
 
                 if(refreshSessions.length >= Number(process.env.ACTIVE_REFRESH_SESSIONS_COUNT)) {
                     refreshSessions.forEach(el => el.destroy());
                 }
 
-                const refreshToken = await user.createRefreshsession({
+                const refreshToken = await computedUser.createRefreshsession({
                     fingerprint: fingerprint,
                 });
                 
-                const payload = { id: user.id };
+                const payload = { id: computedUser.id };
                 const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_KEY, { expiresIn: process.env.EXPIRATION_TIME_ACCESS_TOKEN });
 
-                res.cookie('refreshToken', refreshToken.refreshtoken, { httpOnly: true, maxAge: expiresIn, domain: process.env.FRONTEND_DOMAIN, path: '/api/auth' });
+                res.cookie('refreshToken', refreshToken.refreshtoken, { httpOnly: true, maxAge: expiresIn, domain: process.env.DOMAIN, path: '/api/auth' });
 
                 res.json({
                     accessToken,
@@ -71,7 +73,7 @@ exports.refreshTokens = async(req, res) => {
                         expiresin: expiresIn,
                     });
     
-                    res.cookie('refreshToken', refreshToken.refreshtoken, { httpOnly: true, maxAge: expiresIn, domain: process.env.FRONTEND_DOMAIN, path: '/api/auth' })
+                    res.cookie('refreshToken', refreshToken.refreshtoken, { httpOnly: true, maxAge: expiresIn, domain:  process.env.DOMAIN, path: '/api/auth' })
                         .json({ accessToken });
                 } else {
                     res.json({ error: { type: 'refreshToken', message: 'Токен скомпрометирован' } });

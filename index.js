@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 const db = require('./models');
 
@@ -26,6 +27,7 @@ const corsOptions = {
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,6 +38,10 @@ app.options('*', cors());
 require('./routes/user.routes')(app);
 require('./routes/auth.routes')(app);
 require('./routes/OAuth2.routes')(app);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
 
 db.sequelize.sync()
     .then(() => {
