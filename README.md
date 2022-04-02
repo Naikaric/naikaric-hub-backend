@@ -1,4 +1,4 @@
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Naikaric/naikaric-hub-backend/master?style=plastic)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Naikaric/naikaric-hub-backend/master?style=plastic) ![GitHub](https://img.shields.io/github/license/Naikaric/naikaric-hub-backend)
 
 # Naikaric hub: серверная часть
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens) ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
