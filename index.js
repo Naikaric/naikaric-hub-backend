@@ -4,6 +4,8 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const db = require('./models');
 
@@ -25,7 +27,45 @@ const corsOptions = {
     },
 };
 
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Naikaric hub API',
+            description: 'API для сайта [Naikaric hub](http://www.nikitachurilin.ru)',
+            version: '1.0.0',
+            contact: {
+                name:'Nikita Churilin',
+                email: 'me@nikitachurilin.ru',
+            },
+            servers: [
+                {
+                    url: 'http://localhost:3002',
+                    description: 'Development server',
+                },
+            ],
+        },
+        licence: {
+            name: 'MIT',
+            url: 'https://github.com/Naikaric/naikaric-hub-backend/blob/master/LICENSE',
+        },
+    },
+    apis: ['./routes/*.js'],
+};
+
+const swaggerUiOptions = {
+    swaggerOptions: {
+        docExpansion: 'none',
+    },
+};
+
 const app = express();
+
+if(process.env.NODE_ENV === 'development') app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerJsDoc(swaggerOptions), swaggerUiOptions)
+);
 
 app.use(express.static(path.join(__dirname, './build')));
 app.use(cors(corsOptions));
