@@ -2,9 +2,9 @@ const middlewares = require('../middlewares');
 
 module.exports = app => {
     const router = require('express').Router();
-    const authContoller = require('../controllers/auth.controller');
+    const authController = require('../controllers/auth.controller');
     
-    router.post('/login', authContoller.login);
+    router.post('/login', authController.login);
     /**
      * @swagger
      * /api/auth/login:
@@ -38,7 +38,7 @@ module.exports = app => {
      *                  required: true
      */
 
-    router.post('/refreshTokens', authContoller.refreshTokens);
+    router.post('/refreshTokens', authController.refreshTokens);
     /**
      * @swagger
      * /api/auth/refreshTokens:
@@ -57,7 +57,7 @@ module.exports = app => {
      *          example: 4rgu37si-1593-0752-0j1l-29qxpt49z374
      */
 
-    router.get('/logout', middlewares.isAuthorized, authContoller.logout);
+    router.get('/logout', middlewares.isAuthorized, authController.logout);
     /**
      * @swagger
      * /api/auth/logout:

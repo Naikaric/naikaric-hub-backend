@@ -2,9 +2,9 @@ const middlewares = require('../middlewares');
 
 module.exports = app => {
     const router = require('express').Router();
-    const userContoller = require('../controllers/user.controller');
+    const userController = require('../controllers/user.controller');
 
-    router.post('', userContoller.create);
+    router.post('', userController.create);
     /**
      * @swagger
      * /api/user:
@@ -48,7 +48,7 @@ module.exports = app => {
      *                  required: true
      */
 
-    router.get('/:id', middlewares.isAuthorized, userContoller.get);
+    router.get('/:id', middlewares.isAuthorized, userController.get);
     /**
      * @swagger
      * /api/user/:id:
@@ -74,7 +74,7 @@ module.exports = app => {
      *          example: 4
      */
 
-    router.put('/:id', middlewares.isAuthorized, userContoller.update);
+    router.put('/:id', middlewares.isAuthorized, userController.update);
     /**
      * @swagger
      * /api/user/:id:
@@ -132,7 +132,7 @@ module.exports = app => {
      *                  required: true
      */
 
-    router.delete('/:id', middlewares.isAuthorized, userContoller.delete);
+    router.delete('/:id', middlewares.isAuthorized, userController.delete);
     /**
      * @swagger
      * /api/user/:id:

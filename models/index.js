@@ -34,6 +34,7 @@ db.sequelize = sequelize;
 db.users = require('./user')(sequelize, Sequelize);
 db.refreshSessions = require('./refreshSession')(sequelize, Sequelize);
 db.origins = require('./origin')(sequelize, Sequelize);
+db.cases = require('./case')(sequelize, Sequelize);
 
 db.users.hasMany(db.refreshSessions, { onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
