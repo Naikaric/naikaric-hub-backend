@@ -72,12 +72,20 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use((req, res, next) => {
+    if(req.url.match(/^\/assets/gm)) {
+        res.sendFile(path.join(__dirname, `.${req.url}`));
+    } else {
+        next();
+    }
+});
 
 app.options('*', cors());
 
 require('./routes/user.routes')(app);
 require('./routes/auth.routes')(app);
 require('./routes/OAuth2.routes')(app);
+require('./routes/case.routes')(app);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './build/index.html'));
