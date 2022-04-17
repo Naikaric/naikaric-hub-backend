@@ -21,7 +21,7 @@ exports.create = async(req, res) => {
 
 exports.getAll = async(req, res) => {
     try {
-        const cases = await Case.findAll({ attributes: { exclude: ['updatedAt', 'text'] } });
+        const cases = await Case.findAll({ attributes: { exclude: ['updatedAt', 'text'] }, order: [['createdAt', 'DESC']] });
 
         if(cases) {
             res.json(cases);
