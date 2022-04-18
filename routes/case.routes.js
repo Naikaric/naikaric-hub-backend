@@ -50,10 +50,10 @@ module.exports = app => {
      *                  required: true
      */
 
-    router.get('/getAll', middlewares.isAuthorized, caseController.getAll);
+    router.get('/all', middlewares.isAuthorized, caseController.getAll);
     /**
      * @swagger
-     * /api/case/getAll:
+     * /api/case/all:
      *  get:
      *      summary: Получение кейсов
      *      description: Получение всех рабочих кейсов
@@ -69,10 +69,10 @@ module.exports = app => {
      *          example: 29qxpt49z374-0j1l-1593-0752-4rgu37si
      */
 
-    router.get('/get/:id', middlewares.isAuthorized, caseController.get);
+    router.get('/:id', middlewares.isAuthorized, caseController.get);
     /**
      * @swagger
-     * /api/case/get/:id:
+     * /api/case/:id:
      *  get:
      *      summary: Получение кейса
      *      description: Получение определённого рабочего кейса по его ID
@@ -95,10 +95,10 @@ module.exports = app => {
      *          example: 4
      */
 
-    router.put('/update/:id', middlewares.isAuthorized, caseController.update);
+    router.put('/:id', middlewares.isAuthorized, caseController.update);
     /**
      * @swagger
-     * /api/case/update/:id:
+     * /api/case/:id:
      *  put:
      *      summary: Обновление кейса
      *      description: Обновление определённого рабочего кейса по его ID
