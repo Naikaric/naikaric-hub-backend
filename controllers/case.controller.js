@@ -48,3 +48,20 @@ exports.get = async(req, res) => {
         res.json({ error: { type: 'get', message: error.message } });
     }
 };
+
+exports.update = async(req, res) => {
+    try {
+        const { id } = req.params;
+        const { data } = req.body;
+
+        const workCase = await Case.update(data, { where: { id } });
+
+        if(workCase) {
+            res.sendStatus(200);
+        } else {
+            res.json({ error: { type: 'update', message: 'Не удалось обновить статью' } });
+        }
+    } catch (error) {
+        res.json({ error: { type: 'get', message: error.message } });
+    }
+};
