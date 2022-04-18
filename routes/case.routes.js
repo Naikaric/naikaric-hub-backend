@@ -50,7 +50,7 @@ module.exports = app => {
      *                  required: true
      */
 
-    router.get('/all', middlewares.isAuthorized, caseController.getAll);
+    router.get('/all', caseController.getAll);
     /**
      * @swagger
      * /api/case/all:
@@ -69,7 +69,7 @@ module.exports = app => {
      *          example: 29qxpt49z374-0j1l-1593-0752-4rgu37si
      */
 
-    router.get('/:id', middlewares.isAuthorized, caseController.get);
+    router.get('/:id', caseController.get);
     /**
      * @swagger
      * /api/case/:id:
